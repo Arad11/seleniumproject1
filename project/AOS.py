@@ -19,6 +19,13 @@ driver.find_element_by_css_selector('div[increment-value-attr="+"]').click()
 driver.find_element_by_name("save_to_cart").click()
 
 driver.find_element_by_css_selector("[href='#/shoppingCart']").click()
-table = driver.find_elements_by_css_selector("[class='fixedTableEdgeCompatibility']>tbody")
-rows = table.find_element_by_css_selector("tr")
-print(len(rows))
+print(driver.find_elements_by_css_selector('tbody>tr>td[class="smollCell quantityMobile"]>label[class="ng-binding"]').get_attribute("value"))
+
+
+#table = driver.find_elements_by_css_selector("[class='fixedTableEdgeCompatibility']")
+# tbody = driver.find_elements_by_css_selector("[class='fixedTableEdgeCompatibility']>tbody")
+# products = 0
+# for i in range(len(tbody)):
+#     amount = driver.find_elements_by_css_selector("td[class='smollCell quantityMobile']>label")
+#     print(driver.find_elements_by_css_selector("#shoppingCart > table > tbody > tr > td:nth-child(5) > label.ng-binding"))
+#     print(amount[0])
