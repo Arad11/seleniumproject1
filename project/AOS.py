@@ -46,24 +46,110 @@ for row in rows:
     print()
 print(products_amount)
 """
-def how_much_products(table_css_selector):
+
+###############################################################################
+"""FIRST TASK"""
+###############################################################################
+def values_from_a_table(table_css_selector, place):
+    """this function gets a table's css_selectors, place of the value you want.
+       the function return the value in a list.
     """
-    this action gets a css_selector of a table, and counts the numbers inside
-    """
-    print(table_css_selector)
     table = driver.find_element_by_css_selector(f"{table_css_selector}")
     rows = table.find_elements_by_tag_name("tr")
-    products_amount = 0
+    answer = []
     for row in rows:
         cells = row.find_elements_by_tag_name("td")
-        for cell in cells:
-            try:
-                x = int(cell.text)
-                products_amount += x
-            except: ValueError
-    return products_amount
-y = how_much_products( "[class='fixedTableEdgeCompatibility']")
+        for i in range(len(cells)):
+            if i == place and i != len(cells) - 1:
+                answer.append(cells[i].text)
+    return answer
 
-
-if y ==int(driver.find_element_by_css_selector('[id="shoppingCartLink"]>span').text):
+"""
+y = values_from_a_table( "[class='fixedTableEdgeCompatibility']", 4)
+total_amount = 0
+for i in y:
+    total_amount += int(i)
+if total_amount == int(driver.find_element_by_css_selector('[id="shoppingCartLink"]>span').text):
     print("True")
+"""
+############ fix it!
+# WebDriverWait(driver,10).until(EC.visibility_of_all_elements_located(By.CSS_SELECTOR("[ng-show='cart.productsInCart.length > 0']>tfoot>tr>td>span>label")))
+# time.sleep(2)
+# word = str(driver.find_element_by_css_selector("[ng-show='cart.productsInCart.length > 0']>tfoot>tr>td>span>label").text)
+# x = word.split()[0].replace("(","")
+# print(x)
+# if x == y:
+#     print("True")
+
+################################################################
+"""DONE!"""
+################################################################
+"""task 2"""
+################################################################
+# table1 = driver.find_element_by_css_selector("#toolTipCart > div > table")
+# rows = table1.find_elements_by_tag_name("tr")
+# pop_up_products_name = []
+# for row in rows:
+#     cells = row.find_elements_by_tag_name("td")
+#     for i in range(len(cells)):
+#         if i == 1 and i != len(cells) - 1:
+#            pop_up_products_name.append(cells[i].find_element_by_tag_name("h3").text)
+# print(pop_up_products_name)
+# cart_page_products_name = values_from_a_table("[class='fixedTableEdgeCompatibility']", 1)
+# print(cart_page_products_name)
+# if pop_up_products_name == cart_page_products_name:
+#     print("True")
+# else:
+#     print("False")
+#
+
+#gets values from the table at the cart page
+"""
+table = driver.find_element_by_css_selector("[class='fixedTableEdgeCompatibility']")
+rows = table.find_elements_by_tag_name("tr")
+products_names = []
+products_color = []
+products_quantity =[]
+products_price = []
+for row in rows:
+    cells = row.find_elements_by_tag_name("td")
+    for i in range(len(cells)):
+        if i == 1 and i != len(cells) - 1:
+            products_names.append(cells[i].text)
+        if i == 3 and i != len(cells) - 1:
+            products_color.append(cells[i].find_element_by_tag_name("span").get_attribute("title"))
+        if i == 4 and i != len(cells) -1:
+            products_quantity.append(cells[i].text)
+            # help with getting the price
+        if i ==5 and i != len(cells) -1:
+            products_price.append(cells[i].find_element_by_tag_name("p").text)
+print(products_names)
+print(products_color)
+print(products_quantity)
+# print(products_price)
+"""
+
+#FAIL TRY TO GET THE VELUES IN THE POP_UP TABLE
+table = driver.find_element_by_css_selector("[ng-show='cart.productsInCart.length > 0']")
+rows = table.find_elements_by_tag_name("tr")
+pop_up_products_names = []
+pop_up_products_color = []
+pop_up_products_quantity =[]
+pop_up_products_price = []
+
+for row in rows:
+    cells = row.find_elements_by_tag_name("td")
+    for i in range(len(cells)):
+        if i == 1 and i != len(cells) - 1:
+            pop_up_products_names.append(cells[i].find_element_by_tag_name("h3").text)
+        if i == 3 and i != len(cells) - 1:
+            pop_up_products_color.append(cells[i].find_elements_by_class_name("ng-binding")[2].find_element_by_tag_name("span").text)
+        if i == 4 and i != len(cells) -1:
+            pop_up_products_quantity.append(cells[i].find_elements_by_class_name("ng-binding")[1].text)
+            # help with getting the price
+        if i ==5 and i != len(cells) -1:
+            pop_up_products_price.append(cells[i].find_elements_by_class_name("price roboto-regular ng-binding").text)
+print(pop_up_products_names)
+print(pop_up_products_color)
+print(pop_up_products_quantity)
+print(pop_up_products_price)
