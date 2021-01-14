@@ -7,8 +7,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 
 
-driver = webdriver.Chrome(executable_path= r"D:\python\chromedriver.exe")
-#driver = webdriver.Chrome(executable_path= r"C:\Users\User\Desktop\New folder\chromedriver.exe")
+#driver = webdriver.Chrome(executable_path= r"D:\python\chromedriver.exe")
+driver = webdriver.Chrome(executable_path= r"C:\Users\User\Desktop\New folder\chromedriver.exe")
 driver.implicitly_wait(10)
 driver.get("https://www.advantageonlineshopping.com/#/")
 driver.maximize_window()
@@ -86,25 +86,33 @@ if total_amount == int(driver.find_element_by_css_selector('[id="shoppingCartLin
 ################################################################
 """task 2"""
 ################################################################
-# table1 = driver.find_element_by_css_selector("#toolTipCart > div > table")
-# rows = table1.find_elements_by_tag_name("tr")
-# pop_up_products_name = []
-# for row in rows:
-#     cells = row.find_elements_by_tag_name("td")
-#     for i in range(len(cells)):
-#         if i == 1 and i != len(cells) - 1:
-#            pop_up_products_name.append(cells[i].find_element_by_tag_name("h3").text)
-# print(pop_up_products_name)
-# cart_page_products_name = values_from_a_table("[class='fixedTableEdgeCompatibility']", 1)
-# print(cart_page_products_name)
-# if pop_up_products_name == cart_page_products_name:
-#     print("True")
-# else:
-#     print("False")
-#
+
+#VERY WELL TRY TO GET THE VELUES IN THE POP_UP TABLE
+table = driver.find_element_by_css_selector("[ng-show='cart.productsInCart.length > 0']")
+rows = table.find_elements_by_tag_name("tr")
+pop_up_products_names = []
+pop_up_products_color = []
+pop_up_products_quantity =[]
+pop_up_products_price = []
+for row in rows:
+    cells = row.find_elements_by_tag_name("td")
+    for i in range(len(cells)):
+        if i == 1 and i != len(cells) - 1:
+            pop_up_products_names.append(cells[i].find_element_by_tag_name("h3").text)
+            pop_up_products_color.append(cells[i].find_elements_by_class_name("ng-binding")[2].find_element_by_tag_name("span").text)
+            pop_up_products_quantity.append(cells[i].find_element_by_tag_name("label").text)
+        if i == 2:
+            pop_up_products_price.append(cells[i].find_element_by_tag_name("p").text)
+print(pop_up_products_names)
+print(pop_up_products_color)
+for i in range(len(pop_up_products_quantity)):
+    pop_up_products_quantity[i].split()
+    pop_up_products_quantity[i] = pop_up_products_quantity[i].split()[1]
+print(pop_up_products_quantity)
+print(pop_up_products_price)
+
 
 #gets values from the table at the cart page
-"""
 table = driver.find_element_by_css_selector("[class='fixedTableEdgeCompatibility']")
 rows = table.find_elements_by_tag_name("tr")
 products_names = []
@@ -120,36 +128,28 @@ for row in rows:
             products_color.append(cells[i].find_element_by_tag_name("span").get_attribute("title"))
         if i == 4 and i != len(cells) -1:
             products_quantity.append(cells[i].text)
-            # help with getting the price
-        if i ==5 and i != len(cells) -1:
+        if i == 5:
             products_price.append(cells[i].find_element_by_tag_name("p").text)
 print(products_names)
 print(products_color)
 print(products_quantity)
-# print(products_price)
-"""
-
-#FAIL TRY TO GET THE VELUES IN THE POP_UP TABLE
-table = driver.find_element_by_css_selector("[ng-show='cart.productsInCart.length > 0']")
-rows = table.find_elements_by_tag_name("tr")
-pop_up_products_names = []
-pop_up_products_color = []
-pop_up_products_quantity =[]
-pop_up_products_price = []
-
-for row in rows:
-    cells = row.find_elements_by_tag_name("td")
-    for i in range(len(cells)):
-        if i == 1 and i != len(cells) - 1:
-            pop_up_products_names.append(cells[i].find_element_by_tag_name("h3").text)
-        if i == 3 and i != len(cells) - 1:
-            pop_up_products_color.append(cells[i].find_elements_by_class_name("ng-binding")[2].find_element_by_tag_name("span").text)
-        if i == 4 and i != len(cells) -1:
-            pop_up_products_quantity.append(cells[i].find_elements_by_class_name("ng-binding")[1].text)
-            # help with getting the price
-        if i ==5 and i != len(cells) -1:
-            pop_up_products_price.append(cells[i].find_elements_by_class_name("price roboto-regular ng-binding").text)
-print(pop_up_products_names)
-print(pop_up_products_color)
-print(pop_up_products_quantity)
-print(pop_up_products_price)
+print(products_price)
+if pop_up_products_quantity == products_quantity:
+    print("equal quantity")
+else:
+    print("not equal quantity")
+if products_color == pop_up_products_color:
+    print("equal colors")
+else:
+    print("not equal colors")
+if pop_up_products_names == products_names:
+    print("same names")
+else:
+    print("not same names")
+if pop_up_products_price == products_price:
+    print("same price")
+else:
+    print("not same price")
+##################################################
+"""DONE!"""
+##################################################
